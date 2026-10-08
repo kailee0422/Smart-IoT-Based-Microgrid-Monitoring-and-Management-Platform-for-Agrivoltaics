@@ -1,4 +1,6 @@
-# Taizhi — Solar Panel Monitoring & Fault Detection
+# Smart IoT-Based Microgrid Monitoring and Management Platform for Agrivoltaics
+
+*(Codename: Taizhi — Mobile Communications Practice Competition, Honorable Mention)*
 
 A Flask web application for monitoring photovoltaic (solar) power plants. It combines
 time-series deep learning models for DC power prediction and anomaly detection with a
