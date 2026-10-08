@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- 元信息 -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Timed Image Capture - Taizhi 臺智</title>
+    <!-- 引入必要的 CSS -->
+    <link rel="icon" type="image/x-icon" href="/static/assets/favicon.ico" />
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet" />
+    <link href="/static/css/styles.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.1.3/css/bootstrap.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding-top: 70px; /* Adjust based on your navbar height */
+        }
+        #mainNav {
+            height: 70px; /* Ensure the navbar height is consistent */
+        }
+        h1, h2 {
+            text-align: center;
+        }
+        /* 调整 img 的样式以适应视频流 */
+        #video-feed {
+            display: block;
+            margin: 20px auto;
+            border: 1px solid #ccc;
+            max-width: 100%;
+        }
+        .btn {
+            margin: 10px 5px;
+        }
+        #status {
+            text-align: center;
+            margin-top: 10px;
+        }
+        /* Loading Spinner 样式 */
+        #loadingSpinner {
+            display: none;
+            position: fixed;
+            z-index: 999;
+            height: 100%;
+            width: 100%;
+            overflow: show;
+            margin: auto;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            right: 0;
+            background-color: rgba(255, 255, 255, 0.8);
+        }
+        #loadingSpinner .spinner-border {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            margin-top: -1rem;
+            margin-left: -1rem;
+        }
+    </style>
+</head>
+<body>
+    <!-- 导航栏 -->
+    <nav class="navbar navbar-expand-lg bg-secondary text-uppercase fixed-top" id="mainNav">
+        <div class="container">
+            <a class="navbar-brand" href="{{ url_for('home') }}">Taizhi 臺智</a>
+        </div>
+        <div class="server-time">
+            <h5><small>Server Time <br>{{ time }}</small></h5>
+        </div>
+    </nav>
+
+    <!-- 定时图像捕捉部分 -->
+    <section class="page-section ControlPanel" id="TimedImageCaptureSection">
+        <div class="container">
+            <h2 class="page-section-heading text-center text-uppercase text-secondary mb-0">Timed Image Capture</h2>
+            <div class="volnix-custom">
+                <div class="volnix-custom-line"></div>
+                <div class="volnix-custom-icon"><i class="fas fa-star"></i></div>
+                <div class="volnix-custom-line"></div>
+            </div>
+
+            <!-- 显示服务器视频流 -->
+            <img id="video-feed" class="rounded" src="{{ url_for('video_feed') }}" alt="Video Feed">
+
+            <!-- 输入字段 -->
+            <div class="row justify-content-center mt-4">
+                <div class="col-md-6">
+                    <!-- 表单字段 -->
+                    <div class="form-group">
+                        <label for="interval" class="form-label">Capture Interval (in seconds):</label>
+                        <input type="number" id="interval" class="form-control" placeholder="e.g., 5">
+                    </div>
+                    <div class="form-group mt-3">
+                        <label for="duration" class="form-label">Total Duration (in seconds):</label>
+                        <input type="number" id="duration" class="form-control" placeholder="e.g., 60">
+                    </div>
+                    <!-- 按钮 -->
+                    <div class="text-center mt-4">
+                        <button id="start-btn" class="btn btn-primary">Start Capturing</button>
+                        <button id="test-btn" class="btn btn-secondary">Test for Anomaly</button>
+                        <a href="{{ url_for('home') }}" class="btn btn-secondary">Back to Home</a>
+                    </div>
+                    <p id="status" class="text-center mt-3 text-info"></p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Loading Spinner -->
+    <div id="loadingSpinner">
+        <div class="spinner-border text-primary" role="status">
+            <span class="visually-hidden">Processing...</span>
+        </div>
+    </div>
+
+    <!-- 脚本 -->
+    <script src="https://code.jquery.com/jquery-3.5.1.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        const startBtn = document.getElementById('start-btn');
+        const statusText = document.getElementById('status');
+
+        // 开始捕获图像
+        startBtn.addEventListener('click', () => {
+            const interval = parseFloat(document.getElementById('interval').value);
+            const duration = parseFloat(document.getElementById('duration').value);
+
+            if (isNaN(interval) || isNaN(duration) || interval <= 0 || duration <= 0) {
+                statusText.textContent = 'Please provide valid positive numbers for both fields.';
+                return;
+            }
+
+            statusText.textContent = 'Starting image capture...';
+
+            // 发送请求到服务器，开始捕获图像
+            fetch('/start_capture', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ interval, duration })
+            })
+            .then(response => response.json())
+            .then(data => {
+                statusText.textContent = data.message;
+                // 开始轮询服务器以检查捕获状态
+        const checkStatus = () => {
+            fetch('/capture_status')
+            .then(response => response.json())
+            .then(statusData => {
+                if (!statusData.capturing) {
+                    statusText.textContent = 'Image capturing completed.';
+                    clearInterval(statusInterval);
+                }
+            })
+            .catch(err => {
+                console.error('Error checking capture status:', err);
+            });
+        };
+
+        // 每秒检查一次状态
+        const statusInterval = setInterval(checkStatus, 1000);
+            })
+            .catch(err => {
+                console.error('Error starting capture:', err);
+                statusText.textContent = 'Error starting image capture.';
+            });
+        });
+
+        // 测试异常检测
+        document.getElementById('test-btn').addEventListener('click', () => {
+            fetch('/test_anomaly', {
+                method: 'POST',
+            })
+            .then(response => {
+                if (response.ok) {
+                    return response.text();
+                }
+                throw new Error('Error testing for anomalies.');
+            })
+            .then(html => {
+                // 替换当前页面内容
+                document.body.innerHTML = html;
+            })
+            .catch(err => {
+                console.error(err);
+                alert('Failed to test for anomalies.');
+            });
+        });
+    </script>
+</body>
+</html>

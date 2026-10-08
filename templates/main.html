@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <title>Taizhi 臺智</title>
+    <!-- Favicon-->
+    <link rel="icon" type="image/x-icon" href="/static/assets/favicon.ico" />
+    <!-- Font Awesome icons (free version)-->
+    <script src="https://use.fontawesome.com/releases/v5.15.4/js/all.js" crossorigin="anonymous"></script>
+    <!-- Google fonts-->
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css" />
+    <link href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet" type="text/css" />
+    <!-- Core theme CSS (includes Bootstrap)-->
+    <link href="/static/css/styles.css" rel="stylesheet" />
+
+    <script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
+    <style>
+        .volnix-btn {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .twospace {
+            padding-right: 10px;
+        }
+    </style>
+</head>
+
+<body id="page-top">
+    <!-- Navigation-->
+    <nav class="navbar navbar-expand-lg bg-secondary text-uppercase fixed-top" id="mainNav">
+        <div class="container">
+            <a class="navbar-brand" href="#page-top">Taizhi 臺智</a>
+
+        </div>
+        <div class="server-time">
+            <h5><small>Server Time <br>{{ time }}</small></h5>
+        </div>
+    </nav>
+    <!-- Masthead-->
+    <header class="masthead bg-primary text-white text-center">
+        <div class="container d-flex align-items-center flex-column">
+            <!-- Masthead Avatar Image-->
+            <img class="masthead-avatar mb-5" src="/static/assets/logo.png" alt="..." />
+            <!-- Masthead Heading-->
+            <h1 class="masthead-heading text-uppercase mb-0">Taizhi 臺智</h1>
+            <!-- Icon Divider-->
+            <div class="volnix-custom divider-light">
+                <div class="volnix-custom-line"></div>
+                <div class="volnix-custom-icon"><i class="fas fa-star"></i></div>
+                <div class="volnix-custom-line"></div>
+            </div>
+            <!-- Masthead Subheading-->
+            <p class="masthead-subheading font-weight-light mb-0">AI Companion</p>
+        </div>
+    </header>
+    <!-- ControlPanel Section-->
+    <section class="page-section ControlPanel" id="ControlPanel">
+        <div class="container">
+            <!-- ControlPanel Section Heading-->
+            <h2 class="page-section-heading text-center text-uppercase text-secondary mb-0">Taizhi- Control panel</h2>
+            <!-- <h3 class=" text-center text-uppercase text-secondary mb-0">Server Local Time {{ time }}</h3> <br> -->
+            <!-- <h3 class=" text-center text-uppercase text-secondary mb-0 status">{{ text }} </h3> -->
+            <!-- Icon Divider-->
+            <div class="volnix-custom">
+                <div class="volnix-custom-line"></div>
+                <div class="volnix-custom-icon"><i class="fas fa-star"></i></div>
+                <div class="volnix-custom-line"></div>
+            </div>
+            <!-- ControlPanel Grid Items-->
+            <div class="row justify-content-center">
+                <!-- ControlPanel Item 1 Upload csv for LSTM model--> 
+                <div class="col-md-6 col-lg-4 mb-5">
+                    <div class="ControlPanel-item mx-auto" data-bs-toggle="modal" data-bs-target="#ControlPanelModal1">
+                        <div class="ControlPanel-item-caption d-flex align-items-center justify-content-center h-100 w-100">
+                            <div class="ControlPanel-item-caption-content text-center text-white"><i class="fas fa-upload fa-3x"></i></div>
+                        </div>
+                        <img class="img-fluid" src="/static/assets/safe.png" alt="Upload CSV" />
+                    </div>
+                    <p class="mb-4"></p>
+                    <div class="volnix-btn text-center">
+                        <a href="{{ url_for('upload_file') }}" class="btn btn-primary">Analomy Detection Data</a>
+                    </div>
+
+                </div>
+                <!-- ControlPanel Item 2-->
+                <div class="col-md-6 col-lg-4 mb-5">
+                    <div class="ControlPanel-item mx-auto" data-bs-toggle="modal" data-bs-target="#ControlPanelModal2">
+                        <div class="ControlPanel-item-caption d-flex align-items-center justify-content-center h-100 w-100">
+                            <div class="ControlPanel-item-caption-content text-center text-white"><i class="fas fa-upload fa-3x"></i></div>
+                        </div>
+                        <img class="img-fluid" src="/static/assets/submarine.png" alt="..." />
+                    </div>
+                    <p></p>
+                    <div class="volnix-btn text-center">
+                        <a href="{{ url_for('test_model') }}" class="btn btn-primary">Power Forecasting</a>
+                    </div>
+
+                </div>
+                <!-- ControlPanel Item 3-->
+                <div class="col-md-6 col-lg-4 mb-5">
+                    <div class="ControlPanel-item mx-auto" data-bs-toggle="modal" data-bs-target="#ControlPanelModal3">
+                        <div class="ControlPanel-item-caption d-flex align-items-center justify-content-center h-100 w-100">
+                            <div class="ControlPanel-item-caption-content text-center text-white"><i class="fas fa-plus fa-3x"></i></div>
+                        </div>
+                        <img class="img-fluid" src="/static/assets/circus.png" alt="..." />
+                    </div>
+                    <p></p>
+                    <div class="volnix-btn text-center">
+                        <a href="{{ url_for('camera') }}" class="btn btn-primary">Analomy Detection Camera</a>
+                    </div>
+
+                </div>
+                <!-- ControlPanel Item 4-->
+                <div class="col-md-6 col-lg-4 mb-5 mb-lg-0">
+                    <div class="ControlPanel-item mx-auto" data-bs-toggle="modal" data-bs-target="#ControlPanelModal4">
+                        <div class="ControlPanel-item-caption d-flex align-items-center justify-content-center h-100 w-100">
+                            <div class="ControlPanel-item-caption-content text-center text-white"><i class="fas fa-plus fa-3x"></i></div>
+                        </div>
+                        <img class="img-fluid" src="/static/assets/cabin.png" alt="..." />
+                    </div>
+                    <p></p>
+                    <div class="volnix-btn text-center">
+                        <a href="{{ url_for('test_model') }}" class="btn btn-primary">Info</a>
+                    </div>
+                </div>
+                <!-- ControlPanel Item 5-->
+                <div class="col-md-6 col-lg-4 mb-5 mb-md-0">
+                    <div class="ControlPanel-item mx-auto" data-bs-toggle="modal" data-bs-target="#ControlPanelModal5">
+                        <div class="ControlPanel-item-caption d-flex align-items-center justify-content-center h-100 w-100">
+                            <div class="ControlPanel-item-caption-content text-center text-white"><i class="fas fa-plus fa-3x"></i></div>
+                        </div>
+                        <img class="img-fluid" src="/static/assets/cake.png" alt="..." />
+                    </div>
+                    <p></p>
+                    <div class="volnix-btn text-center">
+                        <a href="{{ url_for('camera') }}" class="btn btn-primary">Video</a>
+                    </div>
+                </div>
+                <!-- ControlPanel Item 6: Platform -->
+                <div class="col-md-6 col-lg-4">
+                    <div class="ControlPanel-item mx-auto" data-bs-toggle="modal" data-bs-target="#ControlPanelModal6">
+                        <div class="ControlPanel-item-caption d-flex align-items-center justify-content-center h-100 w-100">
+                            <div class="ControlPanel-item-caption-content text-center text-white"><i class="fas fa-plus fa-3x"></i></div>
+                        </div>
+                        <img class="img-fluid" src="/static/assets/info.png" alt="Data info" />
+                    </div>
+                    <p></p>
+                    <div class="volnix-btn text-center">
+                        <a href="https://edu.nthu-smart-farming.kits.tw/refresh-token?redirect=https://edu.nthu-smart-farming.kits.tw/homepage.html" class="btn btn-primary">Dataset</a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+    <!-- About Section-->
+    <section class="page-section bg-primary text-white mb-0" id="about">
+        <div class="container">
+            <!-- About Section Heading-->
+            <h2 class="page-section-heading text-center text-uppercase text-white">About Project</h2>
+            <!-- Icon Divider-->
+            <div class="volnix-custom divider-light">
+                <div class="volnix-custom-line"></div>
+                <div class="volnix-custom-icon"><i class="fas fa-star"></i></div>
+                <div class="volnix-custom-line"></div>
+            </div>
+            <!-- About Section Content-->
+            <div class="row">
+                <div class="col-lg-4 ms-auto">
+                    <p class="lead">We are facing challenges in energy management and need smarter solutions to integrate agriculture with renewable energy. 
+                        Agrivoltaics is an innovative microgrid system designed for recreational farms, aiming to improve energy efficiency and operational performance.
+                    </p>
+                </div>
+                <div class="col-lg-4 me-auto">
+                    <p class="lead">The system offers features like power generation forecasting, solar panel anomaly detection, and automated control.
+                         It uses advanced models to predict energy supply, monitors solar panel issues in real time to reduce maintenance costs, and employs LightController hardware to adjust lighting automatically based on ambient light conditions for energy savings.
+                    </p>
+                </div>
+                <div class="col-lg-4 me-auto">
+                    <p class="lead">Additionally, the system collects and analyzes operational data, presenting insights on a smart energy platform to support informed decision-making for farm operators. 
+                        Agrivoltaics sets a new standard for smart agriculture and sustainable energy management.
+                    </p>
+                </div>
+            </div>
+            <!-- About Section Button-->
+        </div>
+    </section>
+
+    <!-- ControlPanel Modal 1  ON / OFF-->
+    <div class="ControlPanel-modal modal fade" id="ControlPanelModal1" tabindex="-1" aria-labelledby="ControlPanelModal1" aria-hidden="true">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+                <div class="modal-header border-0"><button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button></div>
+                <div class="modal-body text-center pb-5">
+                    <div class="container">
+                        <div class="row justify-content-center">
+                            <div class="col-lg-8">
+                                <!-- ControlPanel Modal - Title-->
+                                <h2 class="ControlPanel-modal-title text-secondary text-uppercase mb-0">Analomy Detection</h2>
+                                <br>
+
+                                <!-- Icon Divider-->
+                                <div class="volnix-custom">
+                                    <div class="volnix-custom-line"></div>
+                                    <div class="volnix-custom-icon"><i class="fas fa-star"></i></div>
+                                    <div class="volnix-custom-line"></div>
+                                </div>
+                                <!-- ControlPanel Modal - Image-->
+                                <img class="img-fluid rounded mb-5" src="/static/assets/safe.png" alt="..." />
+                                <!-- ControlPanel Modal - Text-->
+                                <p class="mb-4">This is used to find Anamoly Detection in Historical Data </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+
+    <!-- ControlPanel Modal 2-->
+    <div class="ControlPanel-modal modal fade" id="ControlPanelModal2" tabindex="-1" aria-labelledby="ControlPanelModal2" aria-hidden="true">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+                <div class="modal-header border-0"><button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button></div>
+                <div class="modal-body text-center pb-5">
+                    <div class="container">
+                        <div class="row justify-content-center">
+                            <div class="col-lg-8">
+                                <!-- ControlPanel Modal - Title-->
+                                <h2 class="ControlPanel-modal-title text-secondary text-uppercase mb-0">POWER GENERATION FORECASTING</h2>
+                                <br>
+                                <!-- Icon Divider-->
+                                <div class="volnix-custom">
+                                    <div class="volnix-custom-line"></div>
+                                    <div class="volnix-custom-icon"><i class="fas fa-star"></i></div>
+                                    <div class="volnix-custom-line"></div>
+                                </div>
+                                <!-- ControlPanel Modal - Image-->
+                                <img class="img-fluid rounded mb-5" src="{{ url_for('static', filename='assets/submarine.png') }}" alt="..." />
+                                <!-- ControlPanel Modal - Text-->
+                                 <p class="mb-4">This is used for power forecasting</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+
+    <!-- ControlPanel Modal 3-->
+    <div class="ControlPanel-modal modal fade" id="ControlPanelModal3" tabindex="-1" aria-labelledby="ControlPanelModal3" aria-hidden="true">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+                <div class="modal-header border-0"><button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button></div>
+                <div class="modal-body text-center pb-5">
+                    <div class="container">
+                        <div class="row justify-content-center">
+                            <div class="col-lg-8">
+                                <!-- ControlPanel Modal - Title-->
+                                <h2 class="ControlPanel-modal-title text-secondary text-uppercase mb-0">Anamoly Detection Camera </h2>
+                                <br>
+                                <!-- Icon Divider-->
+                                <div class="volnix-custom">
+                                    <div class="volnix-custom-line"></div>
+                                    <div class="volnix-custom-icon"><i class="fas fa-star"></i></div>
+                                    <div class="volnix-custom-line"></div>
+                                </div>
+                                <!-- ControlPanel Modal - Image-->
+                                <img class="img-fluid rounded mb-5" src="{{ url_for('static', filename='assets/circus.png') }}" alt="..." />
+                                <!-- ControlPanel Modal - Text-->
+                                <p class="mb-4">This is Anamoly Detection using camera</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <!-- ControlPanel Modal 4-->
+    <!-- <div class="ControlPanel-modal modal fade" id="ControlPanelModal4" tabindex="-1" aria-labelledby="ControlPanelModal4" aria-hidden="true">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+                <div class="modal-header border-0"><button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button></div>
+                <div class="modal-body text-center pb-5">
+                    <div class="container">
+                        <div class="row justify-content-center">
+                            <div class="col-lg-8">
+                                
+                                <h2 class="ControlPanel-modal-title text-secondary text-uppercase mb-0">Information</h2>
+                                <br>
+                              
+                                <div class="volnix-custom">
+                                    <div class="volnix-custom-line"></div>
+                                    <div class="volnix-custom-icon"><i class="fas fa-star"></i></div>
+                                    <div class="volnix-custom-line"></div>
+                                </div>
+                           
+                                <img class="img-fluid rounded mb-5" src="{{ url_for('static', filename='assets/cabin.png') }}" alt="..." />
+                                
+                                <p class="mb-4">Can have some info</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+ -->
+
+<!-- ControlPanel Modal 4-->
+<div class="ControlPanel-modal modal fade" id="ControlPanelModal4" tabindex="-1" aria-labelledby="ControlPanelModal4" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header border-0">
+                <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body text-center pb-5">
+                <div class="container">
+                    <div class="row justify-content-center">
+                        <div class="col-lg-10">
+                            <!-- ControlPanel Modal - Title-->
+                            <h2 class="ControlPanel-modal-title text-secondary text-uppercase mb-0">Information</h2>
+                            <br>
+                            <!-- Icon Divider-->
+                            <div class="volnix-custom">
+                                <div class="volnix-custom-line"></div>
+                                <div class="volnix-custom-icon"><i class="fas fa-star"></i></div>
+                                <div class="volnix-custom-line"></div>
+                            </div>
+                            <!-- ControlPanel Modal - Text -->
+                            <p class="mt-4">This is the Information PDF file.</p>
+                            <p class="mb-4">For more information, please refer to the document above.</p>
+                            <!-- ControlPanel Modal - PDF Viewer -->
+                            <div class="pdf-container mt-4">
+                                <iframe 
+                                    src="{{ url_for('static', filename='files/info.pdf') }}" 
+                                    width="100%" 
+                                    height="600px" 
+                                    style="border: none;">
+                                </iframe>
+                            </div>
+                            
+                            <a href="{{ url_for('static', filename='files/info.pdf') }}" target="_blank" class="btn btn-primary">Download PDF</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+    <!-- ControlPanel Modal 5-->
+    <!-- <div class="ControlPanel-modal modal fade" id="ControlPanelModal5" tabindex="-1" aria-labelledby="ControlPanelModal5" aria-hidden="true">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+                <div class="modal-header border-0"><button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button></div>
+                <div class="modal-body text-center pb-5">
+                    <div class="container">
+                        <div class="row justify-content-center">
+                            <div class="col-lg-8">
+                               
+                                <h2 class="ControlPanel-modal-title text-secondary text-uppercase mb-0">YouTube</h2>
+                              
+                                <div class="volnix-custom">
+                                    <div class="volnix-custom-line"></div>
+                                    <div class="volnix-custom-icon"><i class="fas fa-star"></i></div>
+                                    <div class="volnix-custom-line"></div>
+                                </div>
+                                
+                                <img class="img-fluid rounded mb-5" src="{{ url_for('static', filename='assets/cake.png') }}" alt="..." />
+                            
+                                <p class="mb-4">Check out our video!!</p>
+                                <a class="btn btn-primary" href="https://www.youtube.com/watch?v=-OF_2oZi9VY" >
+                                        YouTube
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div> -->
+    <div class="ControlPanel-modal modal fade" id="ControlPanelModal5" tabindex="-1" aria-labelledby="ControlPanelModal5" aria-hidden="true">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+                <div class="modal-header border-0">
+                    <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body text-center pb-5">
+                    <div class="container">
+                        <div class="row justify-content-center">
+                            <div class="col-lg-8">
+                                <!-- ControlPanel Modal - Title-->
+                                <h2 class="ControlPanel-modal-title text-secondary text-uppercase mb-0">Video</h2>
+                                <!-- Icon Divider-->
+                                <div class="volnix-custom">
+                                    <div class="volnix-custom-line"></div>
+                                    <div class="volnix-custom-icon"><i class="fas fa-star"></i></div>
+                                    <div class="volnix-custom-line"></div>
+                                </div>
+                                <!-- ControlPanel Modal - Video-->
+                                <video class="img-fluid rounded mb-5" controls>
+                                    <source src="{{ url_for('static', filename='files/video.mp4') }}" type="video/mp4">
+                                    Your browser does not support the video tag.
+                                </video>
+                                <!-- ControlPanel Modal - Text-->
+                                <p class="mb-4">Check out our video!!</p>
+                                <a class="btn btn-primary" href="https://drive.google.com/file/d/1yzUvmxQi6SJktLJ9Ol4giEySiw_K7To2/view?usp=sharing">
+                                    Drive
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+ <!-- ControlPanel Modal 6-->
+ <!-- <div class="ControlPanel-modal modal fade" id="ControlPanelModal6" tabindex="-1" aria-labelledby="ControlPanelModal6" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header border-0"><button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button></div>
+            <div class="modal-body text-center pb-5">
+                <div class="container">
+                    <div class="row justify-content-center">
+                        <div class="col-lg-8">
+                           
+                            <h2 class="ControlPanel-modal-title text-secondary text-uppercase mb-0">Platform</h2>
+                          
+                            <div class="volnix-custom">
+                                <div class="volnix-custom-line"></div>
+                                <div class="volnix-custom-icon"><i class="fas fa-star"></i></div>
+                                <div class="volnix-custom-line"></div>
+                            </div>
+                            
+                            <img class="img-fluid rounded mb-5" src="{{ url_for('static', filename='assets/safe.png') }}" alt="..." />
+                           
+                            <p class="mb-4">To download the Dataset, visit the IoT Smart Campus Data Analysis Service Platform (物聯網智慧校園數據分析服務平台)</p>
+                            <a class="btn btn-primary" href="https://edu.nthu-smart-farming.kits.tw/" >
+                                Platform Link
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> -->
+
+<!-- ControlPanel Modal 6-->
+<div class="ControlPanel-modal modal fade" id="ControlPanelModal6" tabindex="-1" aria-labelledby="ControlPanelModal6" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header border-0">
+                <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body text-center pb-5">
+                <div class="container">
+                    <div class="row justify-content-center">
+                        <div class="col-lg-10">
+                            <!-- Modal Title -->
+                            <h2 class="ControlPanel-modal-title text-secondary text-uppercase mb-0">Dataset Files</h2>
+                            <div class="volnix-custom">
+                                <div class="volnix-custom-line"></div>
+                                <div class="volnix-custom-icon"><i class="fas fa-star"></i></div>
+                                <div class="volnix-custom-line"></div>
+                            </div>
+
+                            <!-- Display Inverter Data -->
+                            <div class="table-responsive mt-4">
+                                <h4>Inverter Data</h4>
+                                <table class="table table-bordered table-hover">
+                                    <thead class="table-dark">
+                                        <tr>
+                                            {% for column in inverter_headers %}
+                                            <th>{{ column }}</th>
+                                            {% endfor %}
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for row in inverter_data %}
+                                        <tr>
+                                            {% for cell in row %}
+                                            <td>{{ cell }}</td>
+                                            {% endfor %}
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <!-- Display Weather Data -->
+                            <div class="table-responsive mt-4">
+                                <h4>Weather Data</h4>
+                                <table class="table table-bordered table-hover">
+                                    <thead class="table-dark">
+                                        <tr>
+                                            {% for column in weather_headers %}
+                                            <th>{{ column }}</th>
+                                            {% endfor %}
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for row in weather_data %}
+                                        <tr>
+                                            {% for cell in row %}
+                                            <td>{{ cell }}</td>
+                                            {% endfor %}
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <!-- Footer -->
+                            <p class="mt-4">For more datasets, visit the IoT Smart Campus Data Analysis Service Platform (物聯網智慧校園數據分析服務平台)</p>
+                            <a class="btn btn-secondary" href="https://edu.nthu-smart-farming.kits.tw/">Platform Link</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+    <!-- Bootstrap core JS-->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Core theme JS-->
+    <script src={{ url_for( 'static', filename='js/scripts.js' ) }}></script>
+    <script src="https://cdn.startbootstrap.com/sb-forms-latest.js"></script>
+
+
+</body>
+
+</html>

@@ -1,0 +1,28 @@
+# Byte-compiled / cache
+__pycache__/
+*.py[cod]
+*$py.class
+.ipynb_checkpoints/
+
+# Logs
+*.log
+
+# OS junk
+.DS_Store
+__MACOSX/
+
+# Flask runtime-generated content
+static/uploads/
+
+# Virtual environments
+venv/
+.venv/
+env/
+
+# IDE
+.vscode/
+.idea/
+
+# Redundant archived asset packs (icons already present extracted alongside them)
+**/Archive.zip
+**/Archive.7z
